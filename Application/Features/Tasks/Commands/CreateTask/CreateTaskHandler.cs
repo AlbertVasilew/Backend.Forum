@@ -23,7 +23,8 @@ namespace Application.Features.Tasks.Commands.CreateTask
             var task = new TaskItem
             {
                 Name = request.Name,
-                Description = request.Description
+                Description = request.Description,
+                Deadline = request.Deadline
             };
 
             var category = await categoryRepository.GetById(request.CategoryId);

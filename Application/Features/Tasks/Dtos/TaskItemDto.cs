@@ -7,7 +7,9 @@ namespace Application.Features.Tasks.Dtos
         public int Id { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
+        public DateTime Deadline { get; set; }
         public DateTime CreatedOn { get; set; }
+        public DateTime? CompletedOn { get; set; }
 
         public List<CategoryDto> Categories { get; set; }
     }

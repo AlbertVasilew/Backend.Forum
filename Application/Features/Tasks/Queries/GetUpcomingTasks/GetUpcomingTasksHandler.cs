@@ -18,8 +18,11 @@ namespace Application.Features.Tasks.Queries.GetUpcomingTasks
 
         public async Task<List<TaskItemDto>> Handle(GetUpcomingTasksRequest request, CancellationToken cancellationToken)
         {
-            var result = await taskItemRepository.GetUpcoming();
-            return mapper.Map<List<TaskItemDto>>(result);
+            var tasks = request.OnlyToday
+                ? await taskItemRepository.GetUpcomingToday()
+                : await taskItemRepository.GetUpcoming();
+
+            return mapper.Map<List<TaskItemDto>>(tasks);
         }
     }
 }
