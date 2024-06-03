@@ -11,5 +11,8 @@ namespace Infrastructure.Persistence.Repositories
         {
             return await context.Categories.Include(x => x.Tasks).ToListAsync();
         }
+
+        public async Task Delete(int id)
+            => await context.Categories.Where(x => x.Id == id).ExecuteDeleteAsync();
     }
 }

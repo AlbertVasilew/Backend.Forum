@@ -1,4 +1,5 @@
 ﻿using Application.Features.Categories.Commands.CreateCategory;
+using Application.Features.Categories.Commands.DeleteCategory;
 using Application.Features.Categories.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -23,5 +24,11 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequest request)
             => Ok(await mediator.Send(request));
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            return Ok(await mediator.Send(new DeleteCategoryRequest { Id = id }));
+        }
     }
 }
