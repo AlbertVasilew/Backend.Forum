@@ -14,5 +14,12 @@ namespace Infrastructure.Persistence.Repositories
 
         public async Task Delete(int id)
             => await context.Categories.Where(x => x.Id == id).ExecuteDeleteAsync();
+
+        public async Task Update(int id, string name, string color)
+        {
+            await context.Categories
+                .Where(x => x.Id == id)
+                .ExecuteUpdateAsync(x => x.SetProperty(p => p.Name, name).SetProperty(p => p.Color, color));
+        }
     }
 }

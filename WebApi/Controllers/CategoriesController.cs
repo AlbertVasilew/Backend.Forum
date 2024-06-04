@@ -1,5 +1,7 @@
 ﻿using Application.Features.Categories.Commands.CreateCategory;
 using Application.Features.Categories.Commands.DeleteCategory;
+using Application.Features.Categories.Commands.UpdateCategory;
+using Application.Features.Categories.Dtos;
 using Application.Features.Categories.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +26,12 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequest request)
             => Ok(await mediator.Send(request));
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCategory(int id, [FromBody] UpdateCategoryRequestDto request)
+        {
+            return Ok(await mediator.Send(new UpdateCategoryRequest { Id = id, Name = request.Name, Color = request.Color }));
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)

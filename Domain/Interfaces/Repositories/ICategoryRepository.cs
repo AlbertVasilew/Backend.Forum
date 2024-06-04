@@ -6,5 +6,6 @@ namespace Domain.Interfaces.Repositories
     {
         new Task<List<Category>> GetAll();
         Task Delete(int id);
+        Task Update(int id, string name, string color);
     }
 }
