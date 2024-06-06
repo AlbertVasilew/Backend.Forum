@@ -12,7 +12,7 @@ namespace Infrastructure.Persistence.Repositories
         {
             return await context.Tasks
                 .AsNoTracking()
-                .Include(x => x.CategoryId)
+                .Include(x => x.Category)
                 .Where(x => x.CategoryId == categoryId)
                 .ToListAsync();
         }
