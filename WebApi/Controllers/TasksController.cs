@@ -29,15 +29,17 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("upcoming")]
-        public async Task<IActionResult> GetUpcoming([FromQuery] GetUpcomingTasksRequest request)
+        public async Task<IActionResult> GetUpcoming([FromQuery] bool onlyToday = false)
         {
-            return Ok(await mediator.Send(request));
+            var timezone = Request.Headers["User-Timezone"].First();
+            return Ok(await mediator.Send(new GetUpcomingTasksRequest { OnlyToday = onlyToday, Timezone = timezone }));
         }
 
         [HttpGet("overdue")]
         public async Task<IActionResult> GetOverdue()
         {
-            return Ok(await mediator.Send(new GetOverdueTasksRequest()));
+            var timezone = Request.Headers["User-Timezone"].First();
+            return Ok(await mediator.Send(new GetOverdueTasksRequest { Timezone = timezone }));
         }
 
         [HttpGet("completed")]
@@ -49,7 +51,8 @@ namespace WebApi.Controllers
         [HttpGet("get-menu-counters")]
         public async Task<IActionResult> GetMenuCounters()
         {
-            return Ok(await mediator.Send(new GetMenuCountersRequest()));
+            var timezone = Request.Headers["User-Timezone"].First();
+            return Ok(await mediator.Send(new GetMenuCountersRequest { Timezone = timezone }));
         }
 
         [HttpPut("complete/{id}")]

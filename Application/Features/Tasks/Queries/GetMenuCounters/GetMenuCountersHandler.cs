@@ -16,9 +16,9 @@ namespace Application.Features.Tasks.Queries.GetMenuCounters
         {
             return new MenuCounterDto
             {
-                Upcoming = await taskItemRepository.GetUpcomingCount(),
-                Today = await taskItemRepository.GetUpcomingTodayCount(),
-                Overdue = await taskItemRepository.GetOverdueCount(),
+                Upcoming = await taskItemRepository.GetUpcomingCount(request.Timezone),
+                Today = await taskItemRepository.GetUpcomingTodayCount(request.Timezone),
+                Overdue = await taskItemRepository.GetOverdueCount(request.Timezone),
                 Completed = await taskItemRepository.GetCompletedCount()
             };
         }

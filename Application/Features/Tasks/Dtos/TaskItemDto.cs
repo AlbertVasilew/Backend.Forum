@@ -10,7 +10,6 @@ namespace Application.Features.Tasks.Dtos
         public DateTime Deadline { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? CompletedOn { get; set; }
-
-        public List<CategoryDto> Categories { get; set; }
+        public CategoryDto Category { get; set; }
     }
 }

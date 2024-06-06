@@ -9,6 +9,7 @@
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         public DateTime? CompletedOn { get; set; }
 
-        public ICollection<Category> Categories { get; set; } = new List<Category>();
+        public int? CategoryId { get; set; }
+        public Category? Category { get; set; }
     }
 }

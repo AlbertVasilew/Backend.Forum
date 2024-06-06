@@ -18,7 +18,7 @@ namespace Application.Features.Tasks.Queries.GetOverdueTasks
 
         public async Task<List<TaskItemDto>> Handle(GetOverdueTasksRequest request, CancellationToken cancellationToken)
         {
-            return mapper.Map<List<TaskItemDto>>(await taskItemRepository.GetOverdue());
+            return mapper.Map<List<TaskItemDto>>(await taskItemRepository.GetOverdue(request.Timezone));
         }
     }
 }

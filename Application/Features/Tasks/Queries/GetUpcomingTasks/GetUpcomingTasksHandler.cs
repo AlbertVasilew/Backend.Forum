@@ -19,8 +19,8 @@ namespace Application.Features.Tasks.Queries.GetUpcomingTasks
         public async Task<List<TaskItemDto>> Handle(GetUpcomingTasksRequest request, CancellationToken cancellationToken)
         {
             var tasks = request.OnlyToday
-                ? await taskItemRepository.GetUpcomingToday()
-                : await taskItemRepository.GetUpcoming();
+                ? await taskItemRepository.GetUpcomingToday(request.Timezone)
+                : await taskItemRepository.GetUpcoming(request.Timezone);
 
             return mapper.Map<List<TaskItemDto>>(tasks);
         }

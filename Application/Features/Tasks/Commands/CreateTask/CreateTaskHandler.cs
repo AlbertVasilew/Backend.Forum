@@ -24,12 +24,9 @@ namespace Application.Features.Tasks.Commands.CreateTask
             {
                 Name = request.Name,
                 Description = request.Description,
-                Deadline = request.Deadline
+                Deadline = request.Deadline,
+                CategoryId = request.CategoryId
             };
-
-            var category = await categoryRepository.GetById(request.CategoryId);
-
-            task.Categories.Add(category);
 
             await taskItemRepository.Create(task);
             await unitOfWork.SaveChanges();
