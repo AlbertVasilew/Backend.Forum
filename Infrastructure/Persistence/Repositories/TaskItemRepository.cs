@@ -60,10 +60,20 @@ namespace Infrastructure.Persistence.Repositories
         public async Task Delete(int id)
             => await context.Tasks.Where(x => x.Id == id).ExecuteDeleteAsync();
 
+        public async Task Update(int id, string name, string description, DateTime deadline, int? categoryId)
+        {
+            await context.Tasks.Where(x => x.Id == id).ExecuteUpdateAsync(x => x
+                .SetProperty(p => p.Name, name)
+                .SetProperty(p => p.Description, description)
+                .SetProperty(p => p.Deadline, deadline)
+                .SetProperty(p => p.CategoryId, categoryId));
+        }
+
         private DateTime GetDateTimeByTimezone(string timezone)
             => TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById(timezone));
 
         private IQueryable<TaskItem> GetBaseQuery()
             => context.Tasks.AsNoTracking().Include(x => x.Category).Where(x => x.CompletedOn == null);
+
     }
 }

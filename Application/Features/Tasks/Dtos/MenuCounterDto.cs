@@ -1,4 +1,4 @@
-﻿namespace Application.Features.Tasks.Queries.GetMenuCounters
+﻿namespace Application.Features.Tasks.Dtos
 {
     public class MenuCounterDto
     {

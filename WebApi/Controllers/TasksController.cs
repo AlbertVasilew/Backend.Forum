@@ -1,6 +1,8 @@
 ﻿using Application.Features.Tasks.Commands.CompleteTask;
 using Application.Features.Tasks.Commands.CreateTask;
 using Application.Features.Tasks.Commands.DeleteTask;
+using Application.Features.Tasks.Commands.UpdateTask;
+using Application.Features.Tasks.Dtos;
 using Application.Features.Tasks.Queries.GetCompletedTasks;
 using Application.Features.Tasks.Queries.GetMenuCounters;
 using Application.Features.Tasks.Queries.GetOverdueTasks;
@@ -59,6 +61,19 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Complete([FromRoute] int id)
         {
             return Ok(await mediator.Send(new CompleteTaskRequest { Id = id }));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTask(int id, [FromBody] UpdateTaskRequestDto request)
+        {
+            return Ok(await mediator.Send(new UpdateTaskRequest
+            {
+                Id = id,
+                Name = request.Name,
+                Description = request.Description,
+                Deadline = request.Deadline,
+                CategoryId = request.CategoryId
+            }));
         }
 
         [HttpPost]

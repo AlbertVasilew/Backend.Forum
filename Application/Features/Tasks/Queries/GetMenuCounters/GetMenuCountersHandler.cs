@@ -1,4 +1,5 @@
-﻿using Domain.Interfaces.Repositories;
+﻿using Application.Features.Tasks.Dtos;
+using Domain.Interfaces.Repositories;
 using MediatR;
 
 namespace Application.Features.Tasks.Queries.GetMenuCounters

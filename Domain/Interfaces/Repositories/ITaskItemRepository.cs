@@ -6,6 +6,7 @@ namespace Domain.Interfaces.Repositories
     {
         Task Complete(int id);
         Task Delete(int id);
+        Task Update(int id, string name, string description, DateTime deadline, int? categoryId);
         Task<List<TaskItem>> GetAllByCategory(int categoryId);
         Task<List<TaskItem>> GetCompleted();
         Task<int> GetCompletedCount();
