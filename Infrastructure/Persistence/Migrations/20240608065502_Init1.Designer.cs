@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240606130812_Init1")]
+    [Migration("20240608065502_Init1")]
     partial class Init1
     {
         /// <inheritdoc />
@@ -85,7 +85,8 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Domain.Category", "Category")
                         .WithMany("Tasks")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Category");
                 });

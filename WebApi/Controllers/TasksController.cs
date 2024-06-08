@@ -9,6 +9,7 @@ using Application.Features.Tasks.Queries.GetOverdueTasks;
 using Application.Features.Tasks.Queries.GetTasksByCategory;
 using Application.Features.Tasks.Queries.GetUpcomingTasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -25,12 +26,14 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("category/{categoryId}")]
+        [Authorize]
         public async Task<IActionResult> GetByCategory([FromRoute] int categoryId)
         {
             return Ok(await mediator.Send(new GetTasksByCategoryRequest { CategoryId = categoryId }));
         }
 
         [HttpGet("upcoming")]
+        [Authorize]
         public async Task<IActionResult> GetUpcoming([FromQuery] bool onlyToday = false)
         {
             var timezone = Request.Headers["User-Timezone"].First();
@@ -38,6 +41,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("overdue")]
+        [Authorize]
         public async Task<IActionResult> GetOverdue()
         {
             var timezone = Request.Headers["User-Timezone"].First();
@@ -45,12 +49,14 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("completed")]
+        [Authorize]
         public async Task<IActionResult> GetCompleted()
         {
             return Ok(await mediator.Send(new GetCompletedTasksRequest()));
         }
 
         [HttpGet("get-menu-counters")]
+        [Authorize]
         public async Task<IActionResult> GetMenuCounters()
         {
             var timezone = Request.Headers["User-Timezone"].First();
@@ -58,12 +64,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("complete/{id}")]
+        [Authorize]
         public async Task<IActionResult> Complete([FromRoute] int id)
         {
             return Ok(await mediator.Send(new CompleteTaskRequest { Id = id }));
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateTask(int id, [FromBody] UpdateTaskRequestDto request)
         {
             return Ok(await mediator.Send(new UpdateTaskRequest
@@ -77,12 +85,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateTask([FromBody] CreateTaskRequest request)
         {
             return Ok(await mediator.Send(request));
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteTask(int id)
         {
             return Ok(await mediator.Send(new DeleteTaskRequest { Id = id }));

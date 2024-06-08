@@ -1,26 +1,40 @@
-using Infrastructure.Persistence.DbContexts;
-using Microsoft.EntityFrameworkCore;
 using Application;
-using Domain.Interfaces.Repositories;
-using Infrastructure.Persistence.Repositories;
-using Domain.Repositories;
+using Infrastructure;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        Description = "JWT Authorization header using the Bearer scheme."
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+     {
+         {
+             new OpenApiSecurityScheme
+             {
+                 Reference = new OpenApiReference
+                 {
+                     Type = ReferenceType.SecurityScheme,
+                     Id = "Bearer"
+                 }
+             },
+             new string[] {}
+         }
+     });
+});
 
 builder.Services.AddApplication();
-
-builder.Services.AddScoped<ITaskItemRepository, TaskItemRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
