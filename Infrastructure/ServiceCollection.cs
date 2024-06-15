@@ -39,6 +39,7 @@ namespace Infrastructure
             {
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.User.RequireUniqueEmail = true;
             });
 
             var identityConfig = configuration.GetSection("Identity").Get<IdentityConfig>();

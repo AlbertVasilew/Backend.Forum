@@ -26,8 +26,8 @@ namespace Infrastructure.Persistence.Repositories
 
         public async Task<int> GetUpcomingCount(string timezone)
         {
-            return await context.Tasks.CountAsync(
-                x => TimeZoneInfo.ConvertTimeBySystemTimeZoneId(x.Deadline, timezone).Date > GetDateTimeByTimezone(timezone).Date);
+            return await context.Tasks.CountAsync(x => TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
+                x.Deadline, timezone).Date > GetDateTimeByTimezone(timezone).Date && x.CompletedOn == null);
         }
 
         public async Task<List<TaskItem>> GetUpcomingToday(string timezone)
@@ -60,11 +60,10 @@ namespace Infrastructure.Persistence.Repositories
         public async Task Delete(int id)
             => await context.Tasks.Where(x => x.Id == id).ExecuteDeleteAsync();
 
-        public async Task Update(int id, string name, string description, DateTime deadline, int? categoryId)
+        public async Task Update(int id, string name, DateTime deadline, int? categoryId)
         {
             await context.Tasks.Where(x => x.Id == id).ExecuteUpdateAsync(x => x
                 .SetProperty(p => p.Name, name)
-                .SetProperty(p => p.Description, description)
                 .SetProperty(p => p.Deadline, deadline)
                 .SetProperty(p => p.CategoryId, categoryId));
         }

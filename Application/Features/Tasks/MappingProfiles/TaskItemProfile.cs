@@ -9,8 +9,6 @@ namespace Application.Features.Tasks.MappingProfiles
         public TaskItemProfile()
         {
             CreateMap<TaskItem, TaskItemDto>();
-                //.ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories));
-
             CreateMap<TaskItemDto, TaskItem>();
         }
     }

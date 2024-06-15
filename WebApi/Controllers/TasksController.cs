@@ -78,7 +78,6 @@ namespace WebApi.Controllers
             {
                 Id = id,
                 Name = request.Name,
-                Description = request.Description,
                 Deadline = request.Deadline,
                 CategoryId = request.CategoryId
             }));

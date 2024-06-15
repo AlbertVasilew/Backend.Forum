@@ -23,7 +23,6 @@ namespace Application.Features.Tasks.Commands.CreateTask
             var task = new TaskItem
             {
                 Name = request.Name,
-                Description = request.Description,
                 Deadline = request.Deadline,
                 CategoryId = request.CategoryId
             };
