@@ -1,24 +1,20 @@
 ﻿using Application.Features.Categories.Dtos;
+using Application.Features.Identity.Interfaces;
 using AutoMapper;
 using Domain.Interfaces.Repositories;
 using MediatR;
 
 namespace Application.Features.Categories.Queries
 {
-    public class GetCategoriesHandler : IRequestHandler<GetCategoriesRequest, List<CategoryDto>>
+    public class GetCategoriesHandler(
+        ICategoryRepository categoryRepository,
+        IMapper mapper,
+        IUserContext userContext) : IRequestHandler<GetCategoriesRequest, List<CategoryDto>>
     {
-        private readonly ICategoryRepository categoryRepository;
-        private readonly IMapper mapper;
-
-        public GetCategoriesHandler(ICategoryRepository categoryRepository, IMapper mapper)
-        {
-            this.categoryRepository = categoryRepository;
-            this.mapper = mapper;
-        }
-
         public async Task<List<CategoryDto>> Handle(GetCategoriesRequest request, CancellationToken cancellationToken)
         {
-            return mapper.Map<List<CategoryDto>>(await categoryRepository.GetAll());
+            var userId = userContext.GetCurrentUser()!.Id;
+            return mapper.Map<List<CategoryDto>>(await categoryRepository.GetAll(userId));
         }
     }
 }

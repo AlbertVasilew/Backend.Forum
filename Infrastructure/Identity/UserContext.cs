@@ -17,8 +17,7 @@ namespace Infrastructure.Identity
 
             return new CurrentUserDto
             {
-                Id = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value,
-                Email = user.FindFirst(c => c.Type == ClaimTypes.Email).Value
+                Id = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value
             };
         }
     }

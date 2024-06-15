@@ -7,19 +7,15 @@ namespace Infrastructure.Persistence.Repositories
 {
     public class CategoryRepository(ApplicationDbContext context) : BaseRepository<Category>(context), ICategoryRepository
     {
-        public override async Task<List<Category>> GetAll()
-        {
-            return await context.Categories.Include(x => x.Tasks).ToListAsync();
-        }
+        public async Task<List<Category>> GetAll(string userId)
+            => await context.Categories.Include(x => x.Tasks).Where(x => x.UserId == userId).ToListAsync();
 
         public async Task Delete(int id)
             => await context.Categories.Where(x => x.Id == id).ExecuteDeleteAsync();
 
-        public async Task Update(int id, string name, string color)
-        {
-            await context.Categories
-                .Where(x => x.Id == id)
-                .ExecuteUpdateAsync(x => x.SetProperty(p => p.Name, name).SetProperty(p => p.Color, color));
-        }
+        public async Task Update(int id, string name, string color) =>
+            await context.Categories.Where(x => x.Id == id).ExecuteUpdateAsync(x => x
+                .SetProperty(x => x.Name, name)
+                .SetProperty(x => x.Color, color));
     }
 }

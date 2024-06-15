@@ -19,7 +19,6 @@ namespace Application.Features.Tasks.Queries.GetTasksByCategory
         public async Task<List<TaskItemDto>> Handle(GetTasksByCategoryRequest request, CancellationToken cancellationToken)
         {
             var tasks = await taskItemRepository.GetAllByCategory(request.CategoryId);
-
             return mapper.Map<List<TaskItemDto>>(tasks);
         }
     }
